@@ -1,40 +1,48 @@
 import random
 
-emojis = { 'r': '🪨', 's': '✂️', 'p': '📃'}
+ROCK = "r"
+SCISSORS = "s"
+PAPER = "p"
+
+emojis = { ROCK: '🪨', SCISSORS: '✂️', PAPER: '📃'}
+print()
 #Escolha entre pedra, papel e tesoura
-options = ("r", "p", "s")
+options = tuple((emojis.keys()))
 
-while True:
-    player = input("Rock, paper or scissor? (r/p/s) ").lower()
-    if player not in options:
-        print("Incorret Option")
-        continue
+def get_user_choice():
+    while True:
+     player = input("Rock, paper or scissor? (r/p/s) ").lower()
+     if player in options:
+         return player
+     else:
+         print("Incorret Option")
+         
+def display_choices(player, machine):
+    print(f"The machine chose: {emojis[machine]}")
+    print(f"You chose: {emojis[player]}")     
 
-#Faça o computador escolher uma opcao  
-    else:
-        machine = random.choice(options)
-    
-        print(f"The machine chose: {emojis[machine]}")
-        print(f"You chose: {emojis[player]}")
-    
-    #Se o computador escolher a mesma opcao do jogador
-        if player == machine:
+def determine_winner(player, machine):
+ if player == machine:
             print("Draw")
- #Se o jogador escolher entre pedra e o computador tessoura
- #Se o jogador escolher entre papel e o computador pedra
- #Se o jogador escolher entre tesoura e o computador papel   
-        elif (
-            (player == "r" and machine == "s") or 
-            (player == "p" and machine == "r") or 
-            (player == "s" and machine == "p")):
+ elif (
+    (player == ROCK and machine == SCISSORS) or 
+    (player == PAPER and machine == ROCK) or 
+    (player == SCISSORS and machine == PAPER)):
 
-#Print Voce Venceu
-             print("You WIN!")    
-#Caso Contrario
-#Print Voce perder        
-        else:
-            print("You Lose")      
-    should_continue = input('Continue? (y/n): ').lower()     
-    if should_continue == 'n':
-        break     
-    
+    print("You WIN!")           
+ else:
+    print("You Lose")   
+ 
+def play_game():
+                    
+    while True:
+        player = get_user_choice()
+        machine = random.choice(options)
+        
+        display_choices(player, machine)   
+
+        determine_winner(player, machine)             
+        should_continue = input('Continue? (y/n): ').lower()     
+        if should_continue == 'n':
+            break     
+play_game()    
